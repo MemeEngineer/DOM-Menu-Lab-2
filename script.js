@@ -95,10 +95,86 @@ const showingSubMenu = false;
 
 
 //============ task 5.2
-topMenuLinks.addEventListener('click',function(e){
+topMenuEl.addEventListener('click',function(e){
     e.preventDefault();
     if(e.target.textContent !== "a"){
         return 
+    }else{
+      console.log(e.target.innerHTML)
     }
-    console.log(e.target)
+   // =======5.3
+if(e.target.classList.contains('active')){
+  e.target.classList.remove('active')
+  showingSubMenu = false;
+  subMenuEl.style.top = '0';
+return
+}
+//====== 5.4
+for(let link of topMenuLinks){
+  link.classList.remove('active')
+}
+//====5.5
+
+e.target.classList.add('active')
+
+//=====5.6
+const findLink = menuLinks.find(obj => obj.text === e.target.textContent)
+
+if( findLink.subLinks !== undefined){
+  showingSubMenu = true
+}else{
+  showingSubMenu = false
+}
+
+//=======5.7
+if(showingSubMenu === true){
+buildSubMenu(findLink.subLinks)
+subMenuEl.style.top = '100%'
+}else{
+  subMenuEl.style.top='0'
+}
+//====5.8
+let buildSubMenu = (subLink) => {
+  subMenuEl.textContent = ''
+
+  for(let link of subLink){
+const alink = document.createElement('a')
+alink.setAttribute("href", link.href)
+alink.textContent = link.text
+subMenuEl.appendChild(alink)
+  }
+}
+
+
 })
+
+// ======= 6.0
+subMenuEl.addEventListener('click', function(e){
+  e.preventDefault();
+  if(e.target.textContent !== "a"){
+    return 
+}else{
+  console.log(e.target.innerHTML)
+}
+
+//===6.1
+showingSubMenu = false
+subMenuEl.style.top = '0'
+
+
+//===6.2
+
+for(link of topMenuLinks){
+  link.classList.remove('active')
+}
+
+
+//=====6.3
+mainEl.textContent = e.target.textContent
+})
+
+
+
+//Task 6.4
+// If the ABOUT link is clicked, an <h1>about</h1>should be displayed.
+
